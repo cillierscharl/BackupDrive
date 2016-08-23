@@ -1,0 +1,71 @@
+﻿@model Backup.Web.Models.UsersViewModel
+
+@{
+    ViewBag.Title = "Users";
+}
+<div class="container well">
+    <h2>Users</h2>
+    <div class="control-group" style="text-align:right">
+        <button class="btn btn-primary" href="#userCreateModal" data-toggle="modal">Create New User</button>
+    </div>
+    
+    <table style="margin-top:10px;" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Enabled</th>
+            <th>User Type</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var user in Model.UsersAccounts)
+    {
+        <tr class="success">
+            <td style="vertical-align:middle;">@user.Username</td>
+            <td style="vertical-align:middle;">@user.Email</td>
+            <td style="vertical-align:middle;">@user.Enabled</td>
+            <td style="vertical-align:middle;">@user.UserType</td>
+            <td style="text-align:center;">
+                <div class="btn-group">
+                    <button class="btn dropdown-toggle  btn-primary" data-toggle="dropdown">Action
+                    <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="presentation"><a>Disable</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="@String.Format("{0}",user.UserAccounts.Count + 2)">
+
+            </td>
+        </tr>
+        <tr>
+            <th>Account Unique Id</th>
+            <th>Account Quota</th>
+        </tr>
+        foreach (var account in user.UserAccounts)
+        {
+            <tr>
+                <td>
+                    @account.AccountUniqueId
+                </td>
+                <td>
+                    @account.AccountDataQuota
+                </td>
+            </tr>
+        }
+        
+    }
+    </table>
+
+    <div class="modal" id="userCreateModal">
+        <div class="modal-dialog">
+            <div id="createUserContainer" class="modal-content">
+                @Html.Partial("CreateUser", new Backup.Web.Models.CreateUserViewModel())
+            </div>
+        </div>
+    </div>
+</div>

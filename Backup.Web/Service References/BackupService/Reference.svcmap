@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="81c87aca-653c-4c73-bce6-c83487cc49ae" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:61823/Backupservice.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="BackupService.xsd" MetadataType="Schema" ID="bbf9fb34-e814-4340-8fe2-69f10675f17d" SourceId="1" SourceUrl="http://localhost:61823/BackupService.svc?xsd=xsd1" />
+    <MetadataFile FileName="BackupService.disco" MetadataType="Disco" ID="0d30bb79-1181-4501-97da-9276b402d489" SourceId="1" SourceUrl="http://localhost:61823/BackupService.svc?disco" />
+    <MetadataFile FileName="BackupService.wsdl" MetadataType="Wsdl" ID="8d94220a-b79f-4d50-a2f4-30d2ad264dc1" SourceId="1" SourceUrl="http://localhost:61823/BackupService.svc?wsdl" />
+    <MetadataFile FileName="BackupService1.xsd" MetadataType="Schema" ID="89f56261-603c-4bff-ab73-2204a15f4093" SourceId="1" SourceUrl="http://localhost:61823/BackupService.svc?xsd=xsd2" />
+    <MetadataFile FileName="BackupService2.xsd" MetadataType="Schema" ID="a9446da0-9d91-418e-9463-46e565912390" SourceId="1" SourceUrl="http://localhost:61823/BackupService.svc?xsd=xsd3" />
+    <MetadataFile FileName="BackupService3.xsd" MetadataType="Schema" ID="fd15b388-6d22-4540-b82e-78300d08b0e3" SourceId="1" SourceUrl="http://localhost:61823/BackupService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

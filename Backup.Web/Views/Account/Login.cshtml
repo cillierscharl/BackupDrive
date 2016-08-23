@@ -1,0 +1,33 @@
+﻿@model Backup.Web.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@using (Html.BeginForm())
+{
+    if (!Html.ViewData.ModelState.IsValid)
+    {
+    <div class="alert alert-danger">
+        @Html.ValidationSummary()
+    </div>
+    }
+
+    
+    <div class="container">
+        <div class="well">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { @class="form-control" })
+                </div>    
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password, new { @class="form-control" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Register" name="submit" class="btn btn-primary btn-large"/>
+                </div>
+        </div>
+    </div>
+}

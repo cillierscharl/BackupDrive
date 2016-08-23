@@ -1,0 +1,445 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ApertureBackupModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ApertureBackupModelStoreContainer">
+    <EntitySet Name="BackupFiles" EntityType="ApertureBackupModel.Store.BackupFiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BackupFolders" EntityType="ApertureBackupModel.Store.BackupFolders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="ApertureBackupModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserAccounts" EntityType="ApertureBackupModel.Store.UserAccounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserTypes" EntityType="ApertureBackupModel.Store.UserTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserLogs" EntityType="ApertureBackupModel.Store.UserLogs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BackupFileStates" EntityType="ApertureBackupModel.Store.BackupFileStates" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_BackupFolderBackupFile" Association="ApertureBackupModel.Store.FK_BackupFolderBackupFile">
+      <End Role="BackupFolders" EntitySet="BackupFolders" />
+      <End Role="BackupFiles" EntitySet="BackupFiles" />
+    </AssociationSet>
+    <AssociationSet Name="UserUserAccount" Association="ApertureBackupModel.Store.UserUserAccount">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserAccount" EntitySet="UserAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="UserAccountBackupFolder" Association="ApertureBackupModel.Store.UserAccountBackupFolder">
+      <End Role="UserAccount" EntitySet="UserAccounts" />
+      <End Role="BackupFolder" EntitySet="BackupFolders" />
+    </AssociationSet>
+    <AssociationSet Name="UserUserLog" Association="ApertureBackupModel.Store.UserUserLog">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserLog" EntitySet="UserLogs" />
+    </AssociationSet>
+    <AssociationSet Name="BackupFileStateBackupFile" Association="ApertureBackupModel.Store.BackupFileStateBackupFile">
+      <End Role="BackupFileState" EntitySet="BackupFileStates" />
+      <End Role="BackupFile" EntitySet="BackupFiles" />
+    </AssociationSet>
+    <AssociationSet Name="UserTypeUser" Association="ApertureBackupModel.Store.UserTypeUser">
+      <End Role="UserType" EntitySet="UserTypes" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BackupFiles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BackupFolderId" Type="int" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FileSize" Type="bigint" Nullable="false" />
+    <Property Name="BackupFileStateId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BackupFolders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AbsoluteFolderPath" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserAccountId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Enabled" Type="bit" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="UserTypeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserAccounts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="AccountUniqueId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AccountDataQuota" Type="bigint" Nullable="true" />
+  </EntityType>
+  <EntityType Name="UserTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserLogs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BackupFileStates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_BackupFolderBackupFile">
+    <End Role="BackupFolders" Type="ApertureBackupModel.Store.BackupFolders" Multiplicity="1" />
+    <End Role="BackupFiles" Type="ApertureBackupModel.Store.BackupFiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BackupFolders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BackupFiles">
+        <PropertyRef Name="BackupFolderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserUserAccount">
+    <End Role="User" Type="ApertureBackupModel.Store.Users" Multiplicity="1" />
+    <End Role="UserAccount" Type="ApertureBackupModel.Store.UserAccounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserAccount">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserAccountBackupFolder">
+    <End Role="UserAccount" Type="ApertureBackupModel.Store.UserAccounts" Multiplicity="1" />
+    <End Role="BackupFolder" Type="ApertureBackupModel.Store.BackupFolders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserAccount">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BackupFolder">
+        <PropertyRef Name="UserAccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserUserLog">
+    <End Role="User" Type="ApertureBackupModel.Store.Users" Multiplicity="1" />
+    <End Role="UserLog" Type="ApertureBackupModel.Store.UserLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserLog">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BackupFileStateBackupFile">
+    <End Role="BackupFileState" Type="ApertureBackupModel.Store.BackupFileStates" Multiplicity="1" />
+    <End Role="BackupFile" Type="ApertureBackupModel.Store.BackupFiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BackupFileState">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BackupFile">
+        <PropertyRef Name="BackupFileStateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserTypeUser">
+    <End Role="UserType" Type="ApertureBackupModel.Store.UserTypes" Multiplicity="1" />
+    <End Role="User" Type="ApertureBackupModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="UserTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ApertureBackupModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ApertureBackupContext" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="BackupFiles" EntityType="ApertureBackupModel.BackupFile" />
+          <EntitySet Name="BackupFolders" EntityType="ApertureBackupModel.BackupFolder" />
+          <EntitySet Name="Users" EntityType="ApertureBackupModel.User" />
+          <AssociationSet Name="FK_BackupFolderBackupFile" Association="ApertureBackupModel.FK_BackupFolderBackupFile">
+            <End Role="BackupFolders" EntitySet="BackupFolders" />
+            <End Role="BackupFiles" EntitySet="BackupFiles" />
+          </AssociationSet>
+          <EntitySet Name="UserAccounts" EntityType="ApertureBackupModel.UserAccount" />
+          <AssociationSet Name="UserUserAccount" Association="ApertureBackupModel.UserUserAccount">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="UserAccountBackupFolder" Association="ApertureBackupModel.UserAccountBackupFolder">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="BackupFolder" EntitySet="BackupFolders" />
+          </AssociationSet>
+          <EntitySet Name="UserTypes" EntityType="ApertureBackupModel.UserType" />
+          <EntitySet Name="UserLogs" EntityType="ApertureBackupModel.UserLog" />
+          <AssociationSet Name="UserUserLog" Association="ApertureBackupModel.UserUserLog">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserLog" EntitySet="UserLogs" />
+          </AssociationSet>
+          <EntitySet Name="BackupFileStates" EntityType="ApertureBackupModel.BackupFileState" />
+          <AssociationSet Name="BackupFileStateBackupFile" Association="ApertureBackupModel.BackupFileStateBackupFile">
+            <End Role="BackupFileState" EntitySet="BackupFileStates" />
+            <End Role="BackupFile" EntitySet="BackupFiles" />
+          </AssociationSet>
+          <AssociationSet Name="UserTypeUser" Association="ApertureBackupModel.UserTypeUser">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BackupFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="BackupFolderId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BackupFolder" Relationship="ApertureBackupModel.FK_BackupFolderBackupFile" FromRole="BackupFiles" ToRole="BackupFolders" />
+          <Property Type="String" Name="FileName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Int64" Name="FileSize" Nullable="false" />
+          <NavigationProperty Name="BackupFileState" Relationship="ApertureBackupModel.BackupFileStateBackupFile" FromRole="BackupFile" ToRole="BackupFileState" />
+          <Property Type="Int32" Name="BackupFileStateId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BackupFolder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="BackupFiles" Relationship="ApertureBackupModel.FK_BackupFolderBackupFile" FromRole="BackupFolders" ToRole="BackupFiles" />
+          <Property Type="String" Name="AbsoluteFolderPath" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="UserAccount" Relationship="ApertureBackupModel.UserAccountBackupFolder" FromRole="BackupFolder" ToRole="UserAccount" />
+          <Property Type="Int32" Name="UserAccountId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="UserAccounts" Relationship="ApertureBackupModel.UserUserAccount" FromRole="User" ToRole="UserAccount" />
+          <NavigationProperty Name="UserLogs" Relationship="ApertureBackupModel.UserUserLog" FromRole="User" ToRole="UserLog" />
+          <Property Type="Boolean" Name="Enabled" Nullable="false" />
+          <Property Type="String" Name="Email" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserType" Relationship="ApertureBackupModel.UserTypeUser" FromRole="User" ToRole="UserType" />
+          <Property Type="Int32" Name="UserTypeId" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BackupFolderBackupFile">
+          <End Role="BackupFolders" Type="ApertureBackupModel.BackupFolder" Multiplicity="1" />
+          <End Role="BackupFiles" Type="ApertureBackupModel.BackupFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BackupFolders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BackupFiles">
+              <PropertyRef Name="BackupFolderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="ApertureBackupModel.UserUserAccount" FromRole="UserAccount" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <NavigationProperty Name="BackupFolders" Relationship="ApertureBackupModel.UserAccountBackupFolder" FromRole="UserAccount" ToRole="BackupFolder" />
+          <Property Type="String" Name="AccountUniqueId" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Int64" Name="AccountDataQuota" />
+        </EntityType>
+        <Association Name="UserUserAccount">
+          <End Type="ApertureBackupModel.User" Role="User" Multiplicity="1" />
+          <End Type="ApertureBackupModel.UserAccount" Role="UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserAccountBackupFolder">
+          <End Type="ApertureBackupModel.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="ApertureBackupModel.BackupFolder" Role="BackupFolder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BackupFolder">
+              <PropertyRef Name="UserAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Users" Relationship="ApertureBackupModel.UserTypeUser" FromRole="UserType" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="ApertureBackupModel.UserUserLog" FromRole="UserLog" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+        </EntityType>
+        <Association Name="UserUserLog">
+          <End Type="ApertureBackupModel.User" Role="User" Multiplicity="1" />
+          <End Type="ApertureBackupModel.UserLog" Role="UserLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BackupFileState">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="State" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="BackupFiles" Relationship="ApertureBackupModel.BackupFileStateBackupFile" FromRole="BackupFileState" ToRole="BackupFile" />
+        </EntityType>
+        <Association Name="BackupFileStateBackupFile">
+          <End Type="ApertureBackupModel.BackupFileState" Role="BackupFileState" Multiplicity="1" />
+          <End Type="ApertureBackupModel.BackupFile" Role="BackupFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BackupFileState">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BackupFile">
+              <PropertyRef Name="BackupFileStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserTypeUser">
+          <End Type="ApertureBackupModel.UserType" Role="UserType" Multiplicity="1" />
+          <End Type="ApertureBackupModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ApertureBackupModelStoreContainer" CdmEntityContainer="ApertureBackupContext">
+    <EntitySetMapping Name="BackupFiles">
+      <EntityTypeMapping TypeName="IsTypeOf(ApertureBackupModel.BackupFile)">
+        <MappingFragment StoreEntitySet="BackupFiles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BackupFolderId" ColumnName="BackupFolderId" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+          <ScalarProperty Name="BackupFileStateId" ColumnName="BackupFileStateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BackupFolders">
+      <EntityTypeMapping TypeName="IsTypeOf(ApertureBackupModel.BackupFolder)">
+        <MappingFragment StoreEntitySet="BackupFolders">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AbsoluteFolderPath" ColumnName="AbsoluteFolderPath" />
+          <ScalarProperty Name="UserAccountId" ColumnName="UserAccountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(ApertureBackupModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAccounts">
+      <EntityTypeMapping TypeName="IsTypeOf(ApertureBackupModel.UserAccount)">
+        <MappingFragment StoreEntitySet="UserAccounts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="AccountUniqueId" ColumnName="AccountUniqueId" />
+          <ScalarProperty Name="AccountDataQuota" ColumnName="AccountDataQuota" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(ApertureBackupModel.UserType)">
+        <MappingFragment StoreEntitySet="UserTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLogs">
+      <EntityTypeMapping TypeName="IsTypeOf(ApertureBackupModel.UserLog)">
+        <MappingFragment StoreEntitySet="UserLogs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BackupFileStates">
+      <EntityTypeMapping TypeName="IsTypeOf(ApertureBackupModel.BackupFileState)">
+        <MappingFragment StoreEntitySet="BackupFileStates">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="State" ColumnName="State" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

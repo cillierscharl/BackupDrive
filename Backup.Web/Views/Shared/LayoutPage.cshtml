@@ -1,0 +1,34 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/Scripts/JQuery")
+    @Scripts.Render("~/Scripts/JQueryUnobtrusive")
+    @Scripts.Render("~/Scripts/Bootstrap")
+    @Styles.Render("~/Css/Bootstrap")
+</head>
+<body>
+    <div class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">Aperture Drive Admin</a>
+            </div>
+            <p class="navbar-text pull-right">
+                Welcome! @if (Request.IsAuthenticated) { @User.Identity.Name }
+            </p>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
